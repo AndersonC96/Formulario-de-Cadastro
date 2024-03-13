@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="dashboard.php">Voltar para a Home</a>
+                            <a class="nav-link" href="dashboard.php">Voltar ao Início</a>
                         </li>
                     </ul>
                 </div>
@@ -30,6 +30,15 @@
                             <h2 class="text-center">Preencha o Formulário</h2>
                         </div>
                         <div class="card-body">
+                            <?php if(isset($_GET['success']) && $_GET['success'] == "true") { ?>
+                                <div class="alert alert-success" role="alert">
+                                    Formulário enviado com sucesso!
+                                </div>
+                            <?php } elseif(isset($_GET['success']) && $_GET['success'] == "false") { ?>
+                                <div class="alert alert-danger" role="alert">
+                                    Ocorreu um erro ao enviar o formulário: <?php echo $_GET['error']; ?>
+                                </div>
+                            <?php } ?>
                             <form method="post" action="process_form.php">
                                 <div class="mb-3">
                                     <label for="nome" class="form-label">Nome</label>
