@@ -31,14 +31,14 @@
                             <a class="nav-link" href="dashboard.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="form.php">Formulário de Cadastro</a>
+                            <a class="nav-link" href="form.php">Formulário</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="export.php">Exportar</a>
                         </li>
                         <?php if($user['is_admin']) { ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="create_user.php">Criar Novo Usuário</a>
+                            <a class="nav-link" href="create_user.php">Criar Usuário</a>
                         </li>
                         <?php } ?>
                     </ul>
