@@ -9,7 +9,7 @@
         $sql = "SELECT * FROM forms";
         if($data_inicio && $data_fim){
             $sql .= " WHERE data_hora BETWEEN '$data_inicio' AND '$data_fim'";
-        }elseif($data_inicio){
+        }elseif ($data_inicio){
             $sql .= " WHERE data_hora >= '$data_inicio'";
         }elseif ($data_fim){
             $sql .= " WHERE data_hora <= '$data_fim'";
@@ -39,8 +39,9 @@
             $sheet->setCellValue('I' . $row, $row_data['representante']);
             $row++;
         }
+        $filename = 'dados_' . date('d-m-Y_H-i-s') . '.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="dados_formulario.xlsx"');
+        header("Content-Disposition: attachment;filename=\"$filename\"");
         header('Cache-Control: max-age=0');
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
@@ -79,22 +80,22 @@
                             <h2 class="text-center">Exportar para Excel</h2>
                         </div>
                         <div class="card-body">
-                            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                                <div class="mb-3">
-                                    <label for="data_inicio" class="form-label">Data de Início</label>
-                                    <input type="date" class="form-control" id="data_inicio" name="data_inicio">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="data_fim" class="form-label">Data de Término</label>
-                                    <input type="date" class="form-control" id="data_fim" name="data_fim">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Exportar</button>
-                            </form>
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                        <div class="mb-3">
+                            <label for="data_inicio" class="form-label">Data de Início</label>
+                            <input type="date" class="form-control" id="data_inicio" name="data_inicio">
                         </div>
-                    </div>
+                        <div class="mb-3">
+                            <label for="data_fim" class="form-label">Data de Término</label>
+                            <input type="date" class="form-control" id="data_fim" name="data_fim">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Exportar</button>
+                    </form>
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
