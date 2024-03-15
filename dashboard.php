@@ -1,17 +1,22 @@
 <?php
-session_start();
-if(!isset($_SESSION['user_id'])){
-    header("Location: index.php");
-    exit();
-}
-include 'db.php';
-$user_id = $_SESSION['user_id'];
-$sql = "SELECT * FROM users WHERE id = '$user_id'";
-$result = mysqli_query($conn, $sql);
-$user = mysqli_fetch_assoc($result);
-
-// Definindo a variável de sessão 'sess_usersisname' com o nome do usuário
-$_SESSION['sess_usersisname'] = $user['nome_do_usuario'];
+    session_start();
+    if(!isset($_SESSION['user_id'])){
+        header("Location: index.php");
+        exit();
+    }
+    include 'db.php';
+    $user_id = $_SESSION['user_id'];
+    $sql = "SELECT * FROM users WHERE id = '$user_id'";
+    $result = mysqli_query($conn, $sql);
+    if(mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+        $nome_do_usuario = $user['username']; // Verifica se a chave 'nome_do_usuario' existe antes de atribuir à variável
+    } else {
+        // Trate o caso em que nenhum usuário é encontrado com o ID fornecido
+        // Isso pode incluir redirecionar o usuário de volta para a página de login ou exibir uma mensagem de erro
+        header("Location: index.php");
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -54,7 +59,7 @@ $_SESSION['sess_usersisname'] = $user['nome_do_usuario'];
         </div>
     </nav>
     <div class="container">
-        <h1>Bem-vindo, <b style="color: rgb(83 168 177)"><?php echo $_SESSION['sess_usersisname']; ?></b></h1>
+        <h1>Bem-vindo, <b style="color: rgb(83 168 177)"><?php echo isset($nome_do_usuario) ? $nome_do_usuario : ''; ?></b></h1>
         <!--<h1>Bem-vindo</b></h1>-->
         <p>Algumas funcionalidades podem não estar ativas ainda.</p>
     </div>
