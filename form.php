@@ -10,16 +10,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#">Formulário de Cadastro</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="dashboard.php">Voltar ao Início</a>
-                        </li>
-                    </ul>
-                </div>
+                <a class="nav-link" href="dashboard.php">Voltar ao Início</a>
             </div>
         </nav>
         <div class="container mt-4">
@@ -31,13 +22,9 @@
                         </div>
                         <div class="card-body">
                             <?php if(isset($_GET['success']) && $_GET['success'] == "true") { ?>
-                                <div class="alert alert-success" role="alert">
-                                    Formulário enviado com sucesso!
-                                </div>
+                            <div class="alert alert-success" role="alert">Formulário enviado com sucesso!</div>
                             <?php } elseif(isset($_GET['success']) && $_GET['success'] == "false") { ?>
-                                <div class="alert alert-danger" role="alert">
-                                    Ocorreu um erro ao enviar o formulário: <?php echo $_GET['error']; ?>
-                                </div>
+                            <div class="alert alert-danger" role="alert">Ocorreu um erro ao enviar o formulário: <?php echo $_GET['error']; ?></div>
                             <?php } ?>
                             <form method="post" action="process_form.php">
                                 <div class="mb-3">
@@ -62,15 +49,22 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="estado" class="form-label">Estado</label>
-                                    <input type="text" class="form-control" id="estado" name="estado" required>
+                                    <select class="form-select" id="estado" name="estado" required>
+                                        <option value="">Selecione o Estado</option>
+                                        <option value="AC">Acre</option>
+                                        <option value="AL">Alagoas</option>
+                                        <option value="SE">Sergipe</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="TO">Tocantins</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="data_hora" class="form-label">Data e Hora</label>
-                                    <input type="datetime-local" class="form-control" id="data_hora" name="data_hora" required>
+                                    <input type="text" class="form-control" id="data_hora" name="data_hora" readonly required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="representante" class="form-label">Nome do Representante</label>
-                                    <input type="text" class="form-control" id="representante" name="representante" required>
+                                    <input type="text" class="form-control" id="representante" name="representante" value="<?php echo $_SESSION['sess_usersisname']; ?>" readonly required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Enviar</button>
                             </form>
@@ -80,5 +74,12 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function capturarDataHora(){
+                const dataHora = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+                document.getElementById('data_hora').value = dataHora;
+            }
+            capturarDataHora();
+        </script>
     </body>
 </html>
