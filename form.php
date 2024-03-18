@@ -58,10 +58,11 @@
                                         <option value="TO">Tocantins</option>
                                     </select>
                                 </div>
-                                <div class="mb-3">
+                                <!--<div class="mb-3">
                                     <label for="data_hora" class="form-label">Data e Hora</label>
                                     <input type="text" class="form-control" id="data_hora" name="data_hora" readonly required>
-                                </div>
+                                </div>-->
+                                <input type="hidden" class="form-control" id="data_hora" name="data_hora" value="<?php echo date("Y-m-d H:i:s"); ?>">
                                 <div class="mb-3">
                                     <label for="representante" class="form-label">Nome do Representante</label>
                                     <input type="text" class="form-control" id="representante" name="representante" value="<?php echo $_SESSION['sess_usersisname']; ?>" readonly required>
@@ -74,12 +75,12 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
+        <!--<script>
             function capturarDataHora(){
                 const dataHora = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
                 document.getElementById('data_hora').value = dataHora;
             }
             capturarDataHora();
-        </script>
+        </script>-->
     </body>
 </html>
