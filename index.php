@@ -25,37 +25,25 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Página de Login</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <title>Simple Pharma - Formulários | Login</title>
+        <link rel="icon" href="https://static.wixstatic.com/media/5ede7b_719545c97a084f288b8566db52756425%7Emv2.png/v1/fill/w_180%2Ch_180%2Clg_1%2Cusm_0.66_1.00_0.01/5ede7b_719545c97a084f288b8566db52756425%7Emv2.png" type="image/x-icon" />
+        <link rel="stylesheet" href="./CSS/style.css">
     </head>
-    <body class="bg-light">
+    <body>
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6 mt-5">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="text-center">Login</h2>
-                        </div>
-                        <div class="card-body">
-                            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">Usuário</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Senha</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
-                                </div>
-                                <div class="mb-3">
-                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
-                                </div>
-                            </form>
-                            <?php if(isset($error)) { ?>
-                            <div class="alert alert-danger" role="alert"><?php echo $error; ?></div>
-                            <?php } ?>
-                        </div>
+            <img src="https://static.wixstatic.com/media/fef91e_c3f644e14da442178f706149ae38d838~mv2.png/v1/crop/x_0,y_24,w_436,h_262/fill/w_120,h_71,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/CAPA-03.png" alt="Logo" class="login-logo" />
+            <div class="login-card">
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <div class="buttons">
+                        <a href="#" class="register-link"></a>
+                        <button type="submit" class="login-button">Login</button>
                     </div>
-                </div>
+                </form>
+                <?php if (!empty($error)) { ?>
+                    <div class="alert"><?php echo $error; ?></div>
+                <?php } ?>
             </div>
         </div>
     </body>
