@@ -19,6 +19,7 @@
         exit();
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -68,6 +69,12 @@
         <div class="container mt-5">
             <h1>Bem-vindo, <b style="color: rgb(83 168 177)"><?php echo $nome_do_usuario; ?></b>.</h1>
         </div>
+        <script>
+            if(new URLSearchParams(window.location.search).get('success') === 'true'){
+                alert('Usuário criado com sucesso!');
+                window.location.href = 'dashboard.php';
+            }
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
