@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if(!isset($_SESSION['user_id'])){
+    if(!isset($_SESSION['user_id']) || !isset($_SESSION['is_admin'])){
         header("Location: index.php");
         exit();
     }
@@ -50,7 +50,6 @@
                 <table class="table table-hover shadow">
                     <thead class="table-dark">
                         <tr>
-                            <!--<th>ID</th>-->
                             <th>Nome Completo</th>
                             <th>Nome de Usuário</th>
                             <th>Ações</th>
@@ -59,16 +58,17 @@
                     <tbody>
                         <?php while($user = mysqli_fetch_assoc($result)): ?>
                         <tr>
-                            <!--<td><?php echo $user['id']; ?></td>-->
                             <td><?php echo htmlspecialchars($user['nome']) . ' ' . htmlspecialchars($user['sobrenome']); ?></td>
                             <td><?php echo htmlspecialchars($user['username']); ?></td>
                             <td class="action-buttons">
+                                <?php if ($_SESSION['is_admin'] == 1): ?>
                                 <a href="edit_user.php?id=<?php echo $user['id']; ?>" class="btn btn-outline-primary btn-sm">
                                     <i class="fas fa-edit"></i> Editar
                                 </a>
                                 <a href="remove_user.php?id=<?php echo $user['id']; ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover este usuário?');">
                                     <i class="fas fa-trash-alt"></i> Remover
                                 </a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <?php endwhile; ?>
