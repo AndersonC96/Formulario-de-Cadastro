@@ -84,7 +84,7 @@
                                     <label for="profissao" class="form-label"><b>Profissão</b></label>
                                     <select class="form-select" id="profissao" name="profissao" required>
                                         <option value="">Selecione a Profissão</option>
-                                        <option value="Medico">Médico</option>
+                                        <option value="Médico">Médico</option>
                                         <option value="Dentista">Dentista</option>
                                         <option value="Veterinário">Veterinário</option>
                                         <option value="Esteticista">Esteticista</option>
@@ -141,10 +141,11 @@
                                     </select>
                                 </div>
                                 <input type="hidden" class="form-control" id="data_hora" name="data_hora" value="<?php echo date("Y-m-d H:i:s"); ?>">
-                                <div class="mb-3">
+                                <!--<div class="mb-3">
                                     <label for="representante" class="form-label"><b>Nome do Representante</b></label>
-                                    <input type="text" class="form-control" id="representante" name="representante" value="<?php echo htmlspecialchars($nome_do_usuario); echo " "; echo htmlspecialchars($sobrenome_do_usuario); ?>" readonly required>
-                                </div>
+                                    <input type="text" class="form-control" id="representante" name="representante" value="<?php //echo htmlspecialchars($nome_do_usuario); echo " "; echo htmlspecialchars($sobrenome_do_usuario); ?>" readonly required>
+                                </div>-->
+                                <input type="hidden" id="representante" name="representante" value="<?php echo htmlspecialchars($nome_do_usuario) . ' ' . htmlspecialchars($sobrenome_do_usuario); ?>">
                                 <button type="submit" class="btn btn-primary">Enviar</button>
                             </form>
                         </div>
