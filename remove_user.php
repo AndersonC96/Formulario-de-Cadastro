@@ -8,12 +8,13 @@
     if(isset($_GET['id']) && is_numeric($_GET['id'])){
         $id = $_GET['id'];
         $user_id = $_SESSION['user_id'];
-        $sql = "SELECT id FROM users WHERE id = ? AND (id = ? OR is_admin = 1)";
+        $sql = "SELECT is_admin FROM users WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ii", $id, $user_id);
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
-        if($result->num_rows > 0){
+        $currentUser = $result->fetch_assoc();
+        if($currentUser['is_admin'] == 1 || $id == $user_id){
             $sql = "DELETE FROM users WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $id);
