@@ -13,7 +13,7 @@
     $result = $stmt->get_result();
     if($result->num_rows > 0){
         $user = $result->fetch_assoc();
-        $nome_do_usuario = $user['username'];
+        $nome_do_usuario = $user['nome'];
     }else{
         header("Location: index.php");
         exit();
@@ -63,8 +63,7 @@
             </div>
         </nav>
         <div class="container mt-5">
-            <h1>Bem-vindo, <b style="color: rgb(83 168 177)"><?php echo $nome_do_usuario; ?></b></h1>
-            <p>Algumas funcionalidades podem não estar ativas ainda.</p>
+            <h1>Bem-vindo, <b style="color: rgb(83 168 177)"><?php echo $nome_do_usuario; ?></b>.</h1>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
