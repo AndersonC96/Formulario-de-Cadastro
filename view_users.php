@@ -35,8 +35,8 @@
                         <td><?php echo htmlspecialchars($user['nome']) . ' ' . htmlspecialchars($user['sobrenome']); ?></td>
                         <td><?php echo htmlspecialchars($user['username']); ?></td>
                         <td>
-                            <a href="editar_usuario.php?id=<?php echo $user['id']; ?>" class="btn btn-primary btn-sm">Editar</a>
-                            <a href="remover_usuario.php?id=<?php echo $user['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover este usuário?');">Remover</a>
+                            <a href="edit_user.php?id=<?php echo $user['id']; ?>" class="btn btn-primary btn-sm">Editar</a>
+                            <a href="remove_user.php?id=<?php echo $user['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover este usuário?');">Remover</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
