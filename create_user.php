@@ -1,5 +1,9 @@
 <?php
-// Incluir o arquivo de conexão com o banco de dados
+session_start();
+if(!isset($_SESSION['user_id'])){
+    header("Location: index.php");
+    exit();
+}
 include 'db.php';
 
 // Verificar se o formulário foi enviado
@@ -9,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Criptografar a senha (recomendado)
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $hashed_password = md5($password);
 
     // Preparar e executar a consulta SQL para inserir o usuário no banco de dados
     $sql = "INSERT INTO users (username, password) VALUES ('$username', '$hashed_password')";
