@@ -1,23 +1,22 @@
 <?php
     session_start();
-    if(!isset($_SESSION['user_id'])){
+    if(!isset($_SESSION['user_id']) || $_SESSION['is_admin'] != 1){
         header("Location: index.php");
         exit();
     }
     include 'db.php';
     if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
-        header("Location: listar_usuarios.php");
+        header("Location: view_users.php");
         exit();
     }
     $id = $_GET['id'];
-    $user_id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM users WHERE id = ? AND id = ?";
+    $sql = "SELECT * FROM users WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $id, $user_id);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
     if($result->num_rows == 0){
-        echo "Usuário não encontrado ou você não tem permissão para editar este usuário.";
+        echo "Usuário não encontrado.";
         exit;
     }
     $user = $result->fetch_assoc();
