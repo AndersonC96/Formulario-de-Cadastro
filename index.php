@@ -7,17 +7,24 @@
     include 'db.php';
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username = $_POST['username'];
-        $password = $_POST['password'];
-        $hashed_password = md5($password);
-        $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$hashed_password'";
-        $result = mysqli_query($conn, $sql);
-        if(mysqli_num_rows($result) == 1){
-            $row = mysqli_fetch_assoc($result);
-            $_SESSION['user_id'] = $row['id'];
-            header("Location: dashboard.php");
-            exit();
-        }else{
-            $error = "Usuário ou senha incorretos.";
+        $password = md5($_POST['password']);
+        $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+        $stmt = $conn->prepare($sql);
+        if($stmt){
+            $stmt->bind_param("ss", $username, $password);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if($result->num_rows == 1){
+                $row = $result->fetch_assoc();
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['is_admin'] = $row['is_admin'];
+                header("Location: dashboard.php");
+                exit();
+            }else{
+                $error = "Usuário ou senha incorretos.";
+            }
+        } else {
+            $error = "Erro na preparação da consulta: " . $conn->error;
         }
     }
 ?>
