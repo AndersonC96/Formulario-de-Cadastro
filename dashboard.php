@@ -53,7 +53,7 @@
                             <a class="nav-link" href="create_user.php"><i class="fas fa-user-plus"></i> Criar Usuário</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="view_users.php"><i class="fas fa-person"></i></i> Ver Usuários</a>
+                            <a class="nav-link" href="view_users.php"><i class="fas fa-users"></i> Ver Usuários</a>
                         </li>
                         <?php } ?>
                     </ul>
