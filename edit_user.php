@@ -11,7 +11,7 @@
     }
     $id = $_GET['id'];
     $user_id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM users WHERE id = ? AND user_id = ?";
+    $sql = "SELECT * FROM users WHERE id = ? AND id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $id, $user_id);
     $stmt->execute();
