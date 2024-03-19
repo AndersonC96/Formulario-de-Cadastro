@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="e-mail" class="form-label"><b>E-Mail</b></label>
-                                    <input type="email" class="form-control" id="e-mail" name="e-mail" required>
+                                    <input type="email" class="form-control" id="e-mail" name="email" required>
                                     <span id="email-error" class="text-danger" style="display:none;">Por favor, insira um endereço de e-mail válido.</span>
                                 </div>
                                 <div class="mb-3">
