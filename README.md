@@ -34,7 +34,7 @@ O Projeto de Criação de Formulários é uma aplicação web desenvolvida com P
     cd projeto-formularios
     composer install
 
-3. Crie um banco de dados MySQL e importe o esquema localizado em `database/db.sql`.
+3. Crie um banco de dados MySQL e importe o esquema localizado em `Database/db.sql`.
 
 4. Configure a conexão com o banco de dados editando o arquivo `db.php` com as suas credenciais de banco de dados.
 
