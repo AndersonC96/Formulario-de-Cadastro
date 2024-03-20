@@ -46,6 +46,9 @@
                             <a class="nav-link" href="form.php"><i class="fas fa-edit"></i> Formulário</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="export.php"><i class="fas fa-eye"></i> Ver Formulários</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="export.php"><i class="fas fa-file-export"></i> Exportar</a>
                         </li>
                         <?php if($user['is_admin']) { ?>
