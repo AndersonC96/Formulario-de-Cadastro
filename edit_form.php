@@ -45,7 +45,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="dashboard.php"><i class="fas fa-home"></i> Voltar ao Início</a>
+                            <a class="nav-link" href="view_forms.php"><i class="fas fa-eye"></i> Voltar aos Cadastros</a>
                         </li>
                     </ul>
                 </div>
