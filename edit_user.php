@@ -75,5 +75,10 @@
                 <button type="submit" class="btn btn-primary">Atualizar</button>
             </form>
         </div>
+        <script>
+            if(new URLSearchParams(window.location.search).get('update') === 'failure'){
+                alert("Erro ao atualizar o usuário ou nenhuma alteração realizada.");
+            }
+        </script>
     </body>
 </html>
