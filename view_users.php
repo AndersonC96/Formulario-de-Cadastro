@@ -76,6 +76,12 @@
                 </table>
             </div>
         </div>
+        <script>
+            if(new URLSearchParams(window.location.search).get('update') === 'success'){
+                alert("Usuário atualizado com sucesso!");
+                window.location.href = "view_users.php";
+            }
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
