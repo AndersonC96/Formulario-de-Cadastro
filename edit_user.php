@@ -53,19 +53,19 @@
         </nav>
         <div class="container mt-4">
             <h2>Editar Usuário</h2>
-            <form action="atualizar_usuario.php" method="post">
+            <form action="update_user.php" method="post">
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                 <div class="mb-3">
                     <label for="username" class="form-label"><b>Nome de Usuário</b></label>
                     <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label for="firstName" class="form-label"><b>Nome</b></label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" value="<?php echo htmlspecialchars($user['firstName'] ?? ''); ?>" required>
+                    <label for="nome" class="form-label"><b>Nome</b></label>
+                    <input type="text" class="form-control" id="nome" name="nome" value="<?php echo htmlspecialchars($user['nome'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label for="lastName" class="form-label"><b>Sobrenome</b></label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" value="<?php echo htmlspecialchars($user['lastName'] ?? ''); ?>" required>
+                    <label for="sobrenome" class="form-label"><b>Sobrenome</b></label>
+                    <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="<?php echo htmlspecialchars($user['sobrenome'] ?? ''); ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label"><b>Senha</b></label>
