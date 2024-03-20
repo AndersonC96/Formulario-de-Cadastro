@@ -121,8 +121,8 @@
                         <td><?= htmlspecialchars($row['cidade']) ?></td>
                         <td><?= htmlspecialchars($row['estado']) ?></td>
                         <td><?= date('d/m/Y', strtotime($row['data_hora'])) ?></td>
-                        <td><a href="editar_cadastro.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Editar</a></td>
-                        <td><a href="remover_cadastro.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover este cadastro?')">Remover</a></td>
+                        <td><a href="edit_form.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Editar</a></td>
+                        <td><a href="romove_form.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover este cadastro?')">Remover</a></td>
                     </tr>
                     <?php endwhile; ?>
                     <?php else: ?>
