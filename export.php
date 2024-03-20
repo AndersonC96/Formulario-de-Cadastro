@@ -3,9 +3,17 @@
     require 'vendor/autoload.php';
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-    function formatPhoneNumber($phoneNumber){
+    /*function formatPhoneNumber($phoneNumber){
         $phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
         return preg_replace('/^(\d{2})(\d{5})(\d{4})$/', '($1) $2-$3', $phoneNumber);
+    }*/
+    function formatPhoneNumber($phoneNumber){
+        $phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
+        if (strlen($phoneNumber) == 10) {
+            return preg_replace('/^(\d{2})(\d{4})(\d{4})$/', '($1) $2-$3', $phoneNumber);
+        } else {
+            return preg_replace('/^(\d{2})(\d{5})(\d{4})$/', '($1) $2-$3', $phoneNumber);
+        }
     }
     function formatDateTime($dateTime){
         return date('d/m/Y H:i', strtotime($dateTime));
@@ -26,13 +34,15 @@
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'Nome');
         $sheet->setCellValue('B1', 'Telefone');
-        $sheet->setCellValue('C1', 'Profissão');
-        $sheet->setCellValue('D1', 'Número de Registro');
-        $sheet->setCellValue('E1', 'Cidade');
-        $sheet->setCellValue('F1', 'Estado');
-        $sheet->setCellValue('G1', 'Data e Hora');
-        $sheet->setCellValue('H1', 'Nome do Representante');
-        $spreadsheet->getActiveSheet()->getStyle('A1:H1')->applyFromArray([
+        $sheet->setCellValue('C1', 'Celular');
+        $sheet->setCellValue('D1', 'Email');
+        $sheet->setCellValue('E1', 'Profissão');
+        $sheet->setCellValue('F1', 'Número de Registro');
+        $sheet->setCellValue('G1', 'Cidade');
+        $sheet->setCellValue('H1', 'Estado');
+        $sheet->setCellValue('I1', 'Data e Hora');
+        $sheet->setCellValue('J1', 'Nome do Representante');
+        $spreadsheet->getActiveSheet()->getStyle('A1:J1')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'size' => 12,
@@ -62,16 +72,18 @@
         while($row_data = mysqli_fetch_assoc($result)){
             $sheet->setCellValue('A' . $row, $row_data['nome']);
             $sheet->setCellValue('B' . $row, formatPhoneNumber($row_data['telefone']));
-            $sheet->setCellValue('C' . $row, $row_data['profissao']);
-            $sheet->setCellValueExplicit('D' . $row, $row_data['numero_registro'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-            $sheet->setCellValue('E' . $row, $row_data['cidade']);
-            $sheet->setCellValue('F' . $row, $row_data['estado']);
-            $sheet->setCellValue('G' . $row, formatDateTime($row_data['data_hora']));
-            $sheet->setCellValue('H' . $row, $row_data['representante']);
-            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':H' . $row)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':H' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':H' . $row)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':H' . $row)->applyFromArray([
+            $sheet->setCellValue('C' . $row, formatPhoneNumber($row_data['celular']));
+            $sheet->setCellValue('D' . $row, $row_data['email']);
+            $sheet->setCellValue('E' . $row, $row_data['profissao']);
+            $sheet->setCellValueExplicit('F' . $row, $row_data['numero_registro'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue('G' . $row, $row_data['cidade']);
+            $sheet->setCellValue('H' . $row, $row_data['estado']);
+            $sheet->setCellValue('I' . $row, formatDateTime($row_data['data_hora']));
+            $sheet->setCellValue('J' . $row, $row_data['representante']);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':J' . $row)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':J' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':J' . $row)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':J' . $row)->applyFromArray([
                 'fill' => [
                     'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                     'startColor' => [
