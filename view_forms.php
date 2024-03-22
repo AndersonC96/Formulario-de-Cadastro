@@ -5,6 +5,15 @@
         exit();
     }
     include 'db.php';
+    $user_id = $_SESSION['user_id'];
+    $sql = "SELECT * FROM users WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($user = $result->fetch_assoc()){
+        $_SESSION['user_type'] = $user['is_admin'] ? 'admin' : 'user';
+    }
     $sql = "SELECT id, nome, telefone, celular, email, profissao, numero_registro, cidade, estado, data_hora FROM forms";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -103,15 +112,16 @@
                         <th>Cidade</th>
                         <th>Estado</th>
                         <th>Data/Hora</th>
+                        <?php if($user['is_admin']) { ?>
                         <th>Editar</th>
                         <th>Remover</th>
+                        <?php } ?>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if($result->num_rows > 0): ?>
                     <?php while($row = $result->fetch_assoc()): ?>
                     <tr>
-                        <!--<td><?= htmlspecialchars($row['id']) ?></td>-->
                         <td><?= htmlspecialchars($row['nome']) ?></td>
                         <td><?= htmlspecialchars($row['telefone']) ?></td>
                         <td><?= htmlspecialchars($row['celular']) ?></td>
@@ -120,13 +130,15 @@
                         <td><?= htmlspecialchars($row['numero_registro']) ?></td>
                         <td><?= htmlspecialchars($row['cidade']) ?></td>
                         <td><?= htmlspecialchars($row['estado']) ?></td>
-                        <td><?= date('d/m/Y', strtotime($row['data_hora'])) ?></td>
+                        <td><?= date('d/m/Y H:i', strtotime($row['data_hora'])) ?></td>
+                        <?php if($user['is_admin']) { ?>
                         <td><a href="edit_form.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Editar</a></td>
                         <td><a href="remove_form.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover este cadastro?')">Remover</a></td>
+                        <?php } ?>
                     </tr>
                     <?php endwhile; ?>
                     <?php else: ?>
-                    <tr><td colspan="10">Nenhum cadastro encontrado.</td></tr>
+                    <tr><td colspan="11">Nenhum cadastro encontrado.</td></tr>
                     <?php endif; ?>
                 </tbody>
             </table>
