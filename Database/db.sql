@@ -75,7 +75,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `is_admin`, `nome`, `sobrenome`) VALUES
-(3, 'admin', '202cb962ac59075b964b07152d234b70', 1, 'Anderson', 'Cavalcante'),
+(1, 'admin', '202cb962ac59075b964b07152d234b70', 1, 'Anderson', 'Cavalcante'),
 (5, 'anderson.c', '$2y$10$lqwnjZI7zz7qvxAUHE3aIOBmIhZenZL7zNX6BaTm2r4MS0G0tLYtG', 1, 'Anderson', 'Cavalcante'),
 (6, 'teste', '827ccb0eea8a706c4c34a16891f84e7b', 0, 'Teste', 'Testando'),
 (7, 'Teste1', '$2y$10$xojGkEneNAAgeLUQoE857ObQilpinOKu80cPJ/saQc2AMe7OBLktq', 0, '', ''),
