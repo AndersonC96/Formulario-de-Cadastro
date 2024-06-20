@@ -40,10 +40,11 @@
         $sheet->setCellValue('F1', 'Cidade');
         $sheet->setCellValue('G1', 'Estado');
         $sheet->setCellValue('H1', 'Tipo da visita');
-        $sheet->setCellValue('I1', 'Observações');
-        $sheet->setCellValue('J1', 'Data e Hora');
-        $sheet->setCellValue('K1', 'Nome do Representante');
-        $spreadsheet->getActiveSheet()->getStyle('A1:K1')->applyFromArray([
+        $sheet->setCellValue('I1', 'Brand do Ciclo');
+        $sheet->setCellValue('J1', 'Observações');
+        $sheet->setCellValue('K1', 'Data e Hora');
+        $sheet->setCellValue('L1', 'Nome do Representante');
+        $spreadsheet->getActiveSheet()->getStyle('A1:L1')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'size' => 12,
@@ -81,13 +82,14 @@
             $sheet->setCellValue('F' . $row, $row_data['cidade']);
             $sheet->setCellValue('G' . $row, $row_data['estado']);
             $sheet->setCellValue('H' . $row, $row_data['visita']);
-            $sheet->setCellValue('I' . $row, $row_data['observacao']);
-            $sheet->setCellValue('J' . $row, formatDateTime($row_data['data_hora']));
-            $sheet->setCellValue('K' . $row, $row_data['representante']);
-            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':K' . $row)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':K' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':K' . $row)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':K' . $row)->applyFromArray([
+            $sheet->setCellValue('I' . $row, $row_data['ciclo']);
+            $sheet->setCellValue('J' . $row, $row_data['observacao']);
+            $sheet->setCellValue('K' . $row, formatDateTime($row_data['data_hora']));
+            $sheet->setCellValue('L' . $row, $row_data['representante']);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':L' . $row)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':L' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':L' . $row)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':L' . $row)->applyFromArray([
                 'fill' => [
                     'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                     'startColor' => [
