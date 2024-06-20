@@ -54,6 +54,7 @@
             .table td{
                 padding: 10px 15px;
                 border-top: 1px solid #dee2e6;
+                vertical-align: middle;
             }
             .btn-primary{
                 background-color: #007bff;
@@ -76,6 +77,18 @@
             }
             .btn-danger:hover{
                 background-color: #c82333;
+            }
+            .tooltip-inner{
+                max-width: 350px;
+                white-space: pre-wrap;
+            }
+            .truncate{
+                display: inline-block;
+                max-width: 150px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                vertical-align: middle;
             }
         </style>
     </head>
@@ -131,7 +144,11 @@
                         <td><?= htmlspecialchars($row['cidade']) ?></td>
                         <td><?= htmlspecialchars($row['estado']) ?></td>
                         <td><?= htmlspecialchars($row['visita']) ?></td>
-                        <td><?= htmlspecialchars($row['observacao']) ?></td>
+                        <td>
+                            <span class="truncate" data-bs-toggle="tooltip" title="<?= htmlspecialchars($row['observacao']) ?>">
+                                <?= htmlspecialchars($row['observacao']) ?>
+                            </span>
+                        </td>
                         <td><?= date('d/m/Y H:i', strtotime($row['data_hora'])) ?></td>
                         <?php if($user['is_admin']) { ?>
                         <td><a href="edit_form.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Editar</a></td>
@@ -145,5 +162,18 @@
                 </tbody>
             </table>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#telefone').mask('(00) 0000-0000');
+                $('#celular').mask('(00) 00000-0000');
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl){
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            });
+        </script>
     </body>
 </html>
