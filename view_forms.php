@@ -14,7 +14,7 @@
     if($user = $result->fetch_assoc()){
         $_SESSION['user_type'] = $user['is_admin'] ? 'admin' : 'user';
     }
-    $sql = "SELECT id, nome, numero_registro, nome_conselho, profissao, endereco, cidade, estado, visita, data_hora, observacao, representante FROM forms";
+    $sql = "SELECT id, nome, numero_registro, nome_conselho, profissao, endereco, cidade, estado, visita, data_hora, ciclo, observacao, representante FROM forms";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -124,6 +124,7 @@
                         <th>Cidade</th>
                         <th>Estado</th>
                         <th>Tipo da visita</th>
+                        <th>Ciclo</th>
                         <th>Observações</th>
                         <th>Data/Hora</th>
                         <?php if($user['is_admin']) { ?>
@@ -144,6 +145,7 @@
                         <td><?= htmlspecialchars($row['cidade']) ?></td>
                         <td><?= htmlspecialchars($row['estado']) ?></td>
                         <td><?= htmlspecialchars($row['visita']) ?></td>
+                        <td><?= htmlspecialchars($row['ciclo']) ?></td>
                         <td>
                             <span class="truncate" data-bs-toggle="tooltip" title="<?= htmlspecialchars($row['observacao']) ?>">
                                 <?= htmlspecialchars($row['observacao']) ?>
