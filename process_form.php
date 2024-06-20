@@ -2,24 +2,28 @@
     include 'db.php';
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $nome = $_POST['nome'];
-        $telefone = $_POST['telefone'];
-        $celular = $_POST['celular'];
-        $email = $_POST['email'];
-        $profissao = $_POST['profissao'];
         $numero_registro = $_POST['numero_registro'];
+        $nome_conselho = $_POST['nome_conselho'];
+        $profissao = $_POST['profissao'];
+        $endereco = $_POST['endereco'];
         $cidade = $_POST['cidade'];
         $estado = $_POST['estado'];
+        $visita = $_POST['visita'];
+        $observacao = $_POST['observacao'];
         $data_hora = $_POST['data_hora'];
         $representante = $_POST['representante'];
-        $sql = "INSERT INTO forms (nome, telefone, celular, email, profissao, numero_registro, cidade, estado, data_hora, representante) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO forms (nome, numero_registro, nome_conselho, profissao, endereco, cidade, estado, visita, observacao, data_hora, representante) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssssss", $nome, $telefone, $celular, $email, $profissao, $numero_registro, $cidade, $estado, $data_hora, $representante);
+        if($stmt === false){
+            die('Erro na preparação da consulta: ' . htmlspecialchars($conn->error));
+        }
+        $stmt->bind_param("sssssssssss", $nome, $numero_registro, $nome_conselho, $profissao, $endereco, $cidade, $estado, $visita, $observacao, $data_hora, $representante);
         if($stmt->execute()){
             header("Location: form.php?success=true");
-            exit();
         }else{
             header("Location: form.php?success=false&error=" . urlencode($stmt->error));
-            exit();
         }
+        $stmt->close();
+        $conn->close();
     }
 ?>
