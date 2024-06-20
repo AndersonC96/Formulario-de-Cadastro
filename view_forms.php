@@ -14,7 +14,7 @@
     if($user = $result->fetch_assoc()){
         $_SESSION['user_type'] = $user['is_admin'] ? 'admin' : 'user';
     }
-    $sql = "SELECT id, nome, telefone, celular, email, profissao, numero_registro, cidade, estado, data_hora FROM forms";
+    $sql = "SELECT id, nome, numero_registro, nome_conselho, profissao, endereco, cidade, estado, visita, data_hora, observacao, representante FROM forms";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -104,13 +104,14 @@
                     <tr>
                         <!--<th>ID</th>-->
                         <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Celular</th>
-                        <th>E-mail</th>
-                        <th>Profissão</th>
-                        <th>Número de Registro</th>
+                        <th>Nº de Registro</th>
+                        <th>Conselho</th>
+                        <th>Especialidade</th>
+                        <th>Endereço</th>
                         <th>Cidade</th>
                         <th>Estado</th>
+                        <th>Tipo da visita</th>
+                        <th>Observações</th>
                         <th>Data/Hora</th>
                         <?php if($user['is_admin']) { ?>
                         <th>Editar</th>
@@ -123,13 +124,14 @@
                     <?php while($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?= htmlspecialchars($row['nome']) ?></td>
-                        <td><?= htmlspecialchars($row['telefone']) ?></td>
-                        <td><?= htmlspecialchars($row['celular']) ?></td>
-                        <td><?= htmlspecialchars($row['email']) ?></td>
-                        <td><?= htmlspecialchars($row['profissao']) ?></td>
                         <td><?= htmlspecialchars($row['numero_registro']) ?></td>
+                        <td><?= htmlspecialchars($row['nome_conselho']) ?></td>
+                        <td><?= htmlspecialchars($row['profissao']) ?></td>
+                        <td><?= htmlspecialchars($row['endereco']) ?></td>
                         <td><?= htmlspecialchars($row['cidade']) ?></td>
                         <td><?= htmlspecialchars($row['estado']) ?></td>
+                        <td><?= htmlspecialchars($row['visita']) ?></td>
+                        <td><?= htmlspecialchars($row['observacao']) ?></td>
                         <td><?= date('d/m/Y H:i', strtotime($row['data_hora'])) ?></td>
                         <?php if($user['is_admin']) { ?>
                         <td><a href="edit_form.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Editar</a></td>
