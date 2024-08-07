@@ -1,22 +1,21 @@
 <?php
     session_start();
-    if (!isset($_SESSION['user_id'])) {
+    if(!isset($_SESSION['user_id'])){
         header("Location: index.php");
         exit();
     }
     include 'db.php';
-    date_default_timezone_set('America/Sao_Paulo');
     $user_id = $_SESSION['user_id'];
     $sql = "SELECT nome, sobrenome FROM users WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
+    if($result->num_rows > 0){
         $user = $result->fetch_assoc();
         $nome_do_usuario = $user['nome'];
         $sobrenome_do_usuario = $user['sobrenome'];
-    } else {
+    }else{
         header("Location: index.php");
         exit();
     }
@@ -58,36 +57,51 @@
                             <h2 class="text-center">Preencha o Formulário</h2>
                         </div>
                         <div class="card-body">
+                            <?php if(isset($_GET['success']) && $_GET['success'] == "true") { ?>
+                            <div class="alert alert-success" role="alert">Formulário enviado com sucesso!</div>
+                            <?php } elseif(isset($_GET['success']) && $_GET['success'] == "false") { ?>
+                            <div class="alert alert-danger" role="alert">Ocorreu um erro ao enviar o formulário: <?php echo $_GET['error']; ?></div>
+                            <?php } ?>
                             <form method="post" action="process_form.php">
                                 <div class="mb-3">
                                     <label for="nome" class="form-label"><b>Nome</b></label>
                                     <input type="text" class="form-control" id="nome" name="nome" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="numero_registro" class="form-label"><b>Número de Conselho</b></label>
-                                    <input type="text" class="form-control" id="numero_registro" name="numero_registro" required>
+                                    <label for="telefone" class="form-label"><b>Telefone</b></label>
+                                    <input type="text" class="form-control" id="telefone" name="telefone" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="numero_registro" class="form-label"><b>Conselho</b></label>
-                                    <input type="text" class="form-control" id="numero_registro" name="nome_conselho" required>
+                                    <label for="telefone" class="form-label"><b>Celular</b></label>
+                                    <input type="text" class="form-control" id="celular" name="celular" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="profissao" class="form-label"><b>Especialidade</b></label>
+                                    <label for="e-mail" class="form-label"><b>E-Mail</b></label>
+                                    <input type="email" class="form-control" id="e-mail" name="email" required>
+                                    <span id="email-error" class="text-danger" style="display:none;">Por favor, insira um endereço de e-mail válido.</span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="profissao" class="form-label"><b>Profissão</b></label>
                                     <select class="form-select" id="profissao" name="profissao" required>
-                                        <option value="">Selecione a Especialidade</option>
-                                        <option value="Médico">Médico (a)</option>
+                                        <option value="">Selecione a Profissão</option>
+                                        <option value="Médico">Médico</option>
+                                        <option value="Dentista">Dentista</option>
+                                        <option value="Veterinário">Veterinário</option>
+                                        <option value="Esteticista">Esteticista</option>
+                                        <option value="Psicólogo">Psicólogo</option>
+                                        <option value="Farmacêutico">Farmacêutico</option>
+                                        <option value="Biomédico ">Biomédico </option>
                                         <option value="Nutricionista">Nutricionista</option>
-                                        <option value="Biomédico">Biomédico</option>
-                                        <option value="Farmacêutico">Farmacêutico (a)</option>
+                                        <option value="Fisioterapeuta">Fisioterapeuta</option>
+                                        <option value="Terapeuta">Terapeuta</option>
+                                        <option value="Enfermeiro">Enfermeiro</option>
+                                        <option value="Educador Físico">Educador Físico</option>
+                                        <option value="Farmacêutico Estético">Farmacêutico Estético</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="data_hora" class="form-label"><b>Data e Hora</b></label>
-                                    <input type="datetime-local" class="form-control" id="data_hora" name="data_hora" value="<?php echo date('Y-m-d\TH:i'); ?>" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="endereco" class="form-label"><b>Endereço</b></label>
-                                    <input type="text" class="form-control" id="endereco" name="endereco" required>
+                                    <label for="numero_registro" class="form-label"><b>Número de Registro</b></label>
+                                    <input type="text" class="form-control" id="numero_registro" name="numero_registro" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="cidade" class="form-label"><b>Cidade</b></label>
@@ -126,50 +140,11 @@
                                         <option value="TO">Tocantins</option>
                                     </select>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="visita" class="form-label"><b>Tipo da visita</b></label>
-                                    <select class="form-select" id="visita" name="visita" required>
-                                        <option value="">Selecione a Opção</option>
-                                        <option value="Presencial">Presencial</option>
-                                        <option value="Remota">Remota</option>
-                                    </select>
-                                </div>
+                                <input type="hidden" class="form-control" id="data_hora" name="data_hora" value="<?php echo date("Y-m-d H:i:s"); ?>">
                                 <!--<div class="mb-3">
-                                    <label for="profissao" class="form-label"><b>Brand do Ciclo</b></label>
-                                    <select class="form-select" id="ciclo" name="ciclo" required>
-                                        <option value="">Selecione o Ciclo</option>
-                                        <option value="Resvitech">Resvitech</option>
-                                        <option value="Pepstrong">Pepstrong</option>
-                                        <option value="Vinogrape">Vinogrape</option>
-                                    </select>
+                                    <label for="representante" class="form-label"><b>Nome do Representante</b></label>
+                                    <input type="text" class="form-control" id="representante" name="representante" value="<?php //echo htmlspecialchars($nome_do_usuario); echo " "; echo htmlspecialchars($sobrenome_do_usuario); ?>" readonly required>
                                 </div>-->
-                                <!--<div class="mb-3">
-                                    <label for="ciclo" class="form-label"><b>Brand do Ciclo</b></label>
-                                    <select class="form-select" id="ciclo" name="ciclo[]" multiple required>
-                                        <option value="Resvitech">Resvitech</option>
-                                        <option value="Pepstrong">Pepstrong</option>
-                                        <option value="Vinogrape">Vinogrape</option>
-                                    </select>
-                                </div>-->
-                                <div class="mb-3">
-                                    <label class="form-label"><b>Brand do Ciclo</b></label><br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="ciclo1" name="ciclo[]" value="Resvitech">
-                                        <label class="form-check-label" for="ciclo1">Resvitech</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="ciclo2" name="ciclo[]" value="Pepstrong">
-                                        <label class="form-check-label" for="ciclo2">Pepstrong</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="ciclo3" name="ciclo[]" value="Vinogrape">
-                                        <label class="form-check-label" for="ciclo3">Vinogrape</label>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="observacao" class="form-label"><b>Observações</b></label>
-                                    <textarea class="form-control" id="observacao" name="observacao" rows="3"></textarea>
-                                </div>
                                 <input type="hidden" id="representante" name="representante" value="<?php echo htmlspecialchars($nome_do_usuario) . ' ' . htmlspecialchars($sobrenome_do_usuario); ?>">
                                 <button type="submit" class="btn btn-primary">Enviar</button>
                             </form>
@@ -180,28 +155,12 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             $(document).ready(function(){
                 $('#telefone').mask('(00) 0000-0000');
                 $('#celular').mask('(00) 00000-0000');
             });
-            function getQueryParams(){
-                var params = {};
-                window.location.search.substring(1).split("&").forEach(function(pair){
-                    pair = pair.split("=");
-                    params[pair[0]] = decodeURIComponent(pair[1] || "");
-                });
-                return params;
-            }
-            $(document).ready(function(){
-                var params = getQueryParams();
-                if(params.success === "true"){
-                    alert("Formulário enviado com sucesso!");
-                }else if(params.success === "false"){
-                    alert("Ocorreu um erro ao enviar o formulário: " + params.error);
-                }
-            });
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
