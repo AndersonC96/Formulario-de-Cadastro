@@ -7,13 +7,15 @@
         $email = $_POST['email'];
         $profissao = $_POST['profissao'];
         $numero_registro = $_POST['numero_registro'];
+        $conselho = $_POST['conselho'];
+        $evento = $_POST['evento'];
         $cidade = $_POST['cidade'];
         $estado = $_POST['estado'];
         $data_hora = $_POST['data_hora'];
         $representante = $_POST['representante'];
-        $sql = "INSERT INTO forms (nome, telefone, celular, email, profissao, numero_registro, cidade, estado, data_hora, representante) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO forms (nome, telefone, celular, email, profissao, numero_registro, conselho, evento, cidade, estado, data_hora, representante) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssssss", $nome, $telefone, $celular, $email, $profissao, $numero_registro, $cidade, $estado, $data_hora, $representante);
+        $stmt->bind_param("ssssssssssss", $nome, $telefone, $celular, $email, $profissao, $numero_registro, $conselho, $evento, $cidade, $estado, $data_hora, $representante);
         if($stmt->execute()){
             header("Location: form.php?success=true");
             exit();
