@@ -14,7 +14,7 @@
     if($user = $result->fetch_assoc()){
         $_SESSION['user_type'] = $user['is_admin'] ? 'admin' : 'user';
     }
-    $sql = "SELECT id, nome, numero_registro, nome_conselho, profissao, endereco, cidade, estado, visita, data_hora, ciclo, observacao, representante FROM forms";
+    $sql = "SELECT id, nome, telefone, celular, email, profissao, numero_registro, cidade, estado, data_hora FROM forms";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -54,7 +54,6 @@
             .table td{
                 padding: 10px 15px;
                 border-top: 1px solid #dee2e6;
-                vertical-align: middle;
             }
             .btn-primary{
                 background-color: #007bff;
@@ -77,18 +76,6 @@
             }
             .btn-danger:hover{
                 background-color: #c82333;
-            }
-            .tooltip-inner{
-                max-width: 350px;
-                white-space: pre-wrap;
-            }
-            .truncate{
-                display: inline-block;
-                max-width: 150px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                vertical-align: middle;
             }
         </style>
     </head>
@@ -117,15 +104,13 @@
                     <tr>
                         <!--<th>ID</th>-->
                         <th>Nome</th>
-                        <th>Nº de Registro</th>
-                        <th>Conselho</th>
-                        <th>Especialidade</th>
-                        <th>Endereço</th>
+                        <th>Telefone</th>
+                        <th>Celular</th>
+                        <th>E-mail</th>
+                        <th>Profissão</th>
+                        <th>Número de Registro</th>
                         <th>Cidade</th>
                         <th>Estado</th>
-                        <th>Tipo da visita</th>
-                        <th>Ciclo</th>
-                        <th>Observações</th>
                         <th>Data/Hora</th>
                         <?php if($user['is_admin']) { ?>
                         <th>Editar</th>
@@ -138,19 +123,13 @@
                     <?php while($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?= htmlspecialchars($row['nome']) ?></td>
-                        <td><?= htmlspecialchars($row['numero_registro']) ?></td>
-                        <td><?= htmlspecialchars($row['nome_conselho']) ?></td>
+                        <td><?= htmlspecialchars($row['telefone']) ?></td>
+                        <td><?= htmlspecialchars($row['celular']) ?></td>
+                        <td><?= htmlspecialchars($row['email']) ?></td>
                         <td><?= htmlspecialchars($row['profissao']) ?></td>
-                        <td><?= htmlspecialchars($row['endereco']) ?></td>
+                        <td><?= htmlspecialchars($row['numero_registro']) ?></td>
                         <td><?= htmlspecialchars($row['cidade']) ?></td>
                         <td><?= htmlspecialchars($row['estado']) ?></td>
-                        <td><?= htmlspecialchars($row['visita']) ?></td>
-                        <td><?= htmlspecialchars($row['ciclo']) ?></td>
-                        <td>
-                            <span class="truncate" data-bs-toggle="tooltip" title="<?= htmlspecialchars($row['observacao']) ?>">
-                                <?= htmlspecialchars($row['observacao']) ?>
-                            </span>
-                        </td>
                         <td><?= date('d/m/Y H:i', strtotime($row['data_hora'])) ?></td>
                         <?php if($user['is_admin']) { ?>
                         <td><a href="edit_form.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Editar</a></td>
@@ -164,18 +143,5 @@
                 </tbody>
             </table>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            $(document).ready(function(){
-                $('#telefone').mask('(00) 0000-0000');
-                $('#celular').mask('(00) 00000-0000');
-                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl){
-                    return new bootstrap.Tooltip(tooltipTriggerEl);
-                });
-            });
-        </script>
     </body>
 </html>
