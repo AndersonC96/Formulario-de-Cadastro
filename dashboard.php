@@ -29,6 +29,53 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="./CSS/navbar.css">
+        <style>
+            .navbar-custom{
+                background-color: #f8f9fa;
+            }
+            .navbar-custom .nav-link{
+                color: #000;
+            }
+            .navbar-custom .nav-link:hover{
+                color: #007bff;
+            }
+            .navbar-custom .navbar-brand img{
+                border-radius: 10px;
+            }
+            .container h1{
+                text-align: center;
+                margin-top: 20px;
+                font-size: 2.5em;
+                color: #333;
+            }
+            .navbar-toggler{
+                border-color: rgba(0, 0, 0, 0.1);
+            }
+            .navbar-toggler-icon{
+                color: #000;
+            }
+            .nav-item{
+                border-radius: 15px;
+                margin: 0 5px;
+            }
+            .nav-link{
+                border-radius: 15px;
+                transition: background-color 0.3s;
+            }
+            .nav-link:hover{
+                background-color: #e9ecef;
+            }
+            .dropdown-menu{
+                border-radius: 10px;
+                background-color: #f8f9fa;
+            }
+            .dropdown-item{
+                transition: background-color 0.3s;
+            }
+            .dropdown-item:hover{
+                background-color: #e9ecef;
+            }
+        </style>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-custom">
@@ -51,12 +98,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="export.php"><i class="fas fa-file-export"></i> Exportar</a>
                         </li>
-                        <?php if($user['is_admin']) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="create_user.php"><i class="fas fa-user-plus"></i> Criar Usuário</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="view_users.php"><i class="fas fa-users"></i> Ver Usuários</a>
+                        <?php if ($user['is_admin']){ ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-users"></i> Usuários
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="create_user.php"><i class="fas fa-user-plus"></i> Criar Usuário</a></li>
+                                <li><a class="dropdown-item" href="view_users.php"><i class="fas fa-users"></i> Ver Usuários</a></li>
+                            </ul>
                         </li>
                         <?php } ?>
                     </ul>
@@ -69,7 +119,7 @@
             </div>
         </nav>
         <div class="container mt-5">
-            <h1>Bem-vindo, <b style="color: rgb(83 168 177)"><?php echo $nome_do_usuario; ?></b>.</h1>
+            <h1>Bem-vindo, <b style="color: #53a8b1"><?php echo $nome_do_usuario; ?></b>.</h1>
         </div>
         <script>
             if(new URLSearchParams(window.location.search).get('success') === 'true'){
