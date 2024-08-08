@@ -29,6 +29,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
         <style>
             .navbar-custom{
                 background-color: #f8f9fa;
@@ -116,6 +117,9 @@
             .btn-danger:hover{
                 background-color: #c82333;
             }
+            .dataTables_filter{
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -161,6 +165,16 @@
         </nav>
         <div class="container mt-4">
             <h2>Cadastros Realizados</h2>
+            <div class="row mt-3 mb-3 d-none">
+                <div class="col-md-4">
+                    <label for="startDate">Data Inicial</label>
+                    <input type="text" id="startDate" class="form-control datepicker">
+                </div>
+                <div class="col-md-4">
+                    <label for="endDate">Data Final</label>
+                    <input type="text" id="endDate" class="form-control datepicker">
+                </div>
+            </div>
             <div class="table-responsive mt-3">
                 <table id="cadastrosTable" class="table table-striped table-hover">
                     <thead>
@@ -171,12 +185,12 @@
                             <th>E-mail</th>
                             <th>Representante</th>
                             <th>Profissão</th>
-                            <th>Número de Registro</th>
+                            <th>Nº de Registro</th>
                             <th>Conselho</th>
                             <th>Evento</th>
                             <th>Cidade</th>
                             <th>Estado</th>
-                            <th>Data/Hora</th>
+                            <th>Data</th>
                             <?php if ($user['is_admin']){ ?>
                             <th>Editar</th>
                             <th>Remover</th>
@@ -186,25 +200,25 @@
                     <tbody>
                         <?php if ($result->num_rows > 0) : ?>
                         <?php while ($row = $result->fetch_assoc()) : ?>
-                            <tr>
-                                <td><?= htmlspecialchars($row['nome']) ?></td>
-                                <td><?= htmlspecialchars($row['telefone']) ?></td>
-                                <td><?= htmlspecialchars($row['celular']) ?></td>
-                                <td><?= htmlspecialchars($row['email']) ?></td>
-                                <td><?= htmlspecialchars($row['representante']) ?></td>
-                                <td><?= htmlspecialchars($row['profissao']) ?></td>
-                                <td><?= htmlspecialchars($row['numero_registro']) ?></td>
-                                <td><?= htmlspecialchars($row['conselho']) ?></td>
-                                <td><?= htmlspecialchars($row['evento']) ?></td>
-                                <td><?= htmlspecialchars($row['cidade']) ?></td>
-                                <td><?= htmlspecialchars($row['estado']) ?></td>
-                                <td><?= date('d/m/Y', strtotime($row['data_hora'])) ?></td>
-                                <?php if ($user['is_admin']){ ?>
-                                <td><a href="edit_form.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Editar</a></td>
-                                <td><a href="remove_form.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover este cadastro?')">Remover</a></td>
-                                <?php } ?>
-                            </tr>
-                            <?php endwhile; ?>
+                        <tr>
+                            <td><?= htmlspecialchars($row['nome']) ?></td>
+                            <td><?= htmlspecialchars($row['telefone']) ?></td>
+                            <td><?= htmlspecialchars($row['celular']) ?></td>
+                            <td><?= htmlspecialchars($row['email']) ?></td>
+                            <td><?= htmlspecialchars($row['representante']) ?></td>
+                            <td><?= htmlspecialchars($row['profissao']) ?></td>
+                            <td><?= htmlspecialchars($row['numero_registro']) ?></td>
+                            <td><?= htmlspecialchars($row['conselho']) ?></td>
+                            <td><?= htmlspecialchars($row['evento']) ?></td>
+                            <td><?= htmlspecialchars($row['cidade']) ?></td>
+                            <td><?= htmlspecialchars($row['estado']) ?></td>
+                            <td><?= date('d/m/Y', strtotime($row['data_hora'])) ?></td>
+                            <?php if ($user['is_admin']){ ?>
+                            <td><a href="edit_form.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Editar</a></td>
+                            <td><a href="remove_form.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover este cadastro?')">Remover</a></td>
+                            <?php } ?>
+                        </tr>
+                        <?php endwhile; ?>
                         <?php else : ?>
                         <tr>
                             <td colspan="13">Nenhum cadastro encontrado.</td>
@@ -219,14 +233,24 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
         <script>
             $(document).ready(function(){
-                $('#cadastrosTable').DataTable({
+                $('.datepicker').datepicker({
+                    format: 'dd/mm/yyyy',
+                    language: 'pt-BR',
+                    autoclose: true
+                });
+                var table = $('#cadastrosTable').DataTable({
                     "paging": true,
                     "lengthChange": false,
                     "pageLength": 10,
                     "searching": true,
                     "ordering": true,
+                    "order": [
+                        [11, 'asc']
+                    ],
                     "info": true,
                     "autoWidth": false,
                     "responsive": true,
@@ -242,7 +266,38 @@
                         "emptyTable": "Nenhum cadastro encontrado",
                         "search": "Pesquisar:",
                         "infoFiltered": "(filtrado de _MAX_ registros totais)"
+                    },
+                    "columnDefs": [{
+                        "targets": 11,
+                        "render": function(data, type, row){
+                            if(type === 'sort' || type === 'type'){
+                                return data.split('/').reverse().join('');
+                            }
+                            return data;
+                        }
+                    }]
+                });
+                $('#startDate, #endDate').change(function(){
+                    table.draw();
+                });
+                $.fn.dataTable.ext.search.push(function(settings, data, dataIndex){
+                    var startDate = $('#startDate').datepicker('getDate');
+                    var endDate = $('#endDate').datepicker('getDate');
+                    var colDate = data[11].split('/');
+                    var date = new Date(colDate[2], colDate[1] - 1, colDate[0]);
+                    if(!startDate && !endDate){
+                        return true;
                     }
+                    if(!startDate && date <= endDate){
+                        return true;
+                    }
+                    if(!endDate && date >= startDate){
+                        return true;
+                    }
+                    if(date >= startDate && date <= endDate){
+                        return true;
+                    }
+                    return false;
                 });
             });
         </script>
